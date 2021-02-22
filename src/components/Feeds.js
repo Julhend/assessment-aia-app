@@ -9,15 +9,14 @@ const Feeds = () => {
   const [image, setImage] = useState([])
   const [page, setPage] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
-  const [tags, setTags] = useState([])
 
   useEffect(() => {
     getData()
-  }, []
+  }, [image]
 
   )
   const getData = async () => {
-    await axios.get(`https://assesment-aia-api.herokuapp.com/feeds?page=${page}&tags${tags}`)
+    await axios.get(`https://assesment-aia-api.herokuapp.com/feeds?page=${page}`)
       .then(res => {
         setImage(res.data.photos.photo)
         setPage(res.data.photos.page)
@@ -36,6 +35,7 @@ const Feeds = () => {
     getData()
 
   }
+
 
   const renderCard = (card, index) => {
     const srcPath = 'https://farm' + card.farm + '.staticflickr.com/' + card.server + '/' + card.id + '_' + card.secret + '.jpg';
