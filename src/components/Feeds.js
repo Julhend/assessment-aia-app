@@ -51,10 +51,10 @@ const Feeds = () => {
   };
 
   return <div>
-    <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+    {/* <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
       {pages.map(_ => _)}
     </div>
-    <button onClick={() => addPage()}>+</button>{page}<button>-</button>
+    <button onClick={() => addPage()}>+</button>{page}<button>-</button> */}
 
     <div className="grid">
       {image.map(renderCard)}
