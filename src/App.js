@@ -2,6 +2,7 @@ import React from 'react';
 import "./App.css"
 import Feeds from "./components/Feeds";
 import Navbar from "./components/Navbar";
+import Pagination from "./components/Pagination";
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,6 +23,7 @@ const NavBar = () => {
           </Route>
         </Switch>
       </Router>
+      {/* <Pagination /> */}
     </div>
   )
 }

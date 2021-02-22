@@ -30,13 +30,6 @@ const NavBar = () => {
               <Input type="search" name="search" id="search" placeholder="search" />
             </FormGroup>
             <Button>Search</Button>
-
-
-            {/* <Link to="/Feeds">
-              <ReactBootStrap.Nav.Link href="#feeds">
-                Search
-              </ReactBootStrap.Nav.Link>
-            </Link> */}
           </ReactBootStrap.Nav>
         </ReactBootStrap.Navbar.Collapse>
       </ReactBootStrap.Navbar>

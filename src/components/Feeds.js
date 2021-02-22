@@ -1,54 +1,65 @@
 import React from "react";
 import "./Box.css";
+import axios from 'axios';
 import { Card } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import Pagination from './Pagination'
 
 const Feeds = () => {
-  const cardInfo = [
-    {
-      image: "https://i.pinimg.com/originals/86/67/d3/8667d39a220e896476d35e57b66a926d.jpg",
-      title: "Eren Yaegeh",
-      text: "THE GOAT",
-    },
-    {
-      image: "https://i.pinimg.com/originals/9c/fd/82/9cfd82435cd64fad07e74cdeeb434a55.png",
-      title: "Mikasa Ackerman",
-      text: "THE TRUE GOAT",
-    },
-    {
-      image: "https://i.pinimg.com/236x/26/92/f6/2692f64ac5f78dbddad9a305320c2ba2.jpg",
-      title: "Levi Ackerman",
-      text: "THE TRUE GOAT",
-    },
-    {
-      image: "https://i.pinimg.com/236x/82/d8/a1/82d8a11971397d7e28c605fd745aec30.jpg",
-      text: "THE TRUE GOAT",
-    },
-    {
-      image: "https://i.pinimg.com/originals/9c/fd/82/9cfd82435cd64fad07e74cdeeb434a55.png",
-      title: "Mikasa Ackerman",
-      text: "THE TRUE GOAT",
-    },
-    {
-      image: "https://i.pinimg.com/originals/9c/fd/82/9cfd82435cd64fad07e74cdeeb434a55.png",
-      title: "Mikasa Ackerman",
-      text: "THE TRUE GOAT",
-    },
+  const [image, setImage] = useState([])
+  const [page, setPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(1)
+  const [tags, setTags] = useState([])
 
-  ];
+  useEffect(() => {
+    getData()
+  }, []
+
+  )
+  const getData = async () => {
+    await axios.get(`https://assesment-aia-api.herokuapp.com/feeds?page=${page}&tags${tags}`)
+      .then(res => {
+        setImage(res.data.photos.photo)
+        setPage(res.data.photos.page)
+        setTotalPage(res.data.photos.pages)
+      })
+  }
+
+  const pages = [];
+  for (var i = 0; i < totalPage; i++) {
+    pages.push(<Pagination page={i + 1} />)
+  }
+
+  const addPage = () => {
+    const nextPage = page + 1
+    setPage(nextPage)
+    getData()
+
+  }
 
   const renderCard = (card, index) => {
+    const srcPath = 'https://farm' + card.farm + '.staticflickr.com/' + card.server + '/' + card.id + '_' + card.secret + '.jpg';
+
     return (
       <Card style={{ width: "18rem" }} key={index} className="box">
-        <Card.Img variant="top" src="holder.js/100px180" src={card.image} />
+        <Card.Img variant="top" src={srcPath} />
         <Card.Body>
           <Card.Title>{card.title}</Card.Title>
-          <Card.Text>{card.text}</Card.Text>
         </Card.Body>
       </Card>
     );
   };
 
-  return <div className="grid">{cardInfo.map(renderCard)}</div>;
+  return <div>
+    <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+      {pages.map(_ => _)}
+    </div>
+    <button onClick={() => addPage()}>+</button>{page}<button>-</button>
+
+    <div className="grid">
+      {image.map(renderCard)}
+    </div>
+  </div>;
 };
 
 export default Feeds;
